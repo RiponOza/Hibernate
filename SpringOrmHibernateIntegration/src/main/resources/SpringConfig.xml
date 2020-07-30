@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns:context="http://www.springframework.org/schema/context"
+            xmlns:p="http://www.springframework.org/schema/p"
+            xmlns:tx="http://www.springframework.org/schema/tx"
+            xsi:schemaLocation="http://www.springframework.org/schema/beans                                             
+                               http://www.springframework.org/schema/beans/spring-beans.xsd
+                                http://www.springframework.org/schema/context
+                               http://www.springframework.org/schema/context/spring-context.xsd
+                               http://www.springframework.org/schema/tx
+                               http://www.springframework.org/schema/tx/spring-tx.xsd" >
+
+
+	<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://@localhost:3306/db01" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+
+	<bean id="lsb"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		
+		<property name="dataSource" ref="datasource" />
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+			</props>
+		</property>
+		
+		<property name="packagesToScan" value="com.ripon.entities"/>
+		
+	</bean>
+
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="lsb" />
+	</bean>
+
+	<bean id="customerDao" class="com.ripon.doa.CustomerDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	   <property name="sessionFactory" ref="lsb"/>
+	</bean>
+	
+	<tx:annotation-driven/>
+
+</beans>
