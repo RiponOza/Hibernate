@@ -2,10 +2,12 @@ package com.ripon.doa;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ripon.entities.Customer;
 
+@Repository
 public class CustomerDaoImpl implements CustomerDao {
 	
 	private HibernateTemplate hibernateTemplate;

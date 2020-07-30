@@ -24,7 +24,7 @@ public class App {
 		
 		//Customer c1 = customerDao.getCustomer(12);
 		
-		System.out.println(customerDao.delete(468));
+		System.out.println(customerDao.delete(2005));
 		 
 
 	}
