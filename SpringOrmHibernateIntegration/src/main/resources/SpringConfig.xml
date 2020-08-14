@@ -5,28 +5,34 @@
             xmlns:tx="http://www.springframework.org/schema/tx"
             xsi:schemaLocation="http://www.springframework.org/schema/beans                                             
                                http://www.springframework.org/schema/beans/spring-beans.xsd
-                                http://www.springframework.org/schema/context
+                               http://www.springframework.org/schema/context
                                http://www.springframework.org/schema/context/spring-context.xsd
                                http://www.springframework.org/schema/tx
                                http://www.springframework.org/schema/tx/spring-tx.xsd" >
 
+	<!-- Datasource object by JNDI provided Connection Pooling -->
+<!-- 	<bean id="jndiDatasource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+<!--         <property name="jndiName" value="Spring8AM"/> -->
+<!--         <property name="jndiEnvironment">  -->
+<!--             <props> -->
+<!--                <prop key="java.naming.factory.initial">com.sun.enterprise.naming.impl.SerialInitContextFactory</prop> -->
+             
+<!--                <prop key="java.naming.provider.url">iiop://localhost:4848</prop>  -->
+<!--             </props> -->
+<!--         </property> -->
+<!--     </bean> -->
 
-	<bean id="datasource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName"
-			value="com.mysql.cj.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://@localhost:3306/db01" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
-	</bean>
+	<!-- Datasource object by Spring provided DriverManagerDataSource -->
+		<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> 
+		 		<property name="url" value="jdbc:mysql://localhost:3306/db01" /> 
+				<property name="username" value="root" /> 
+		 		<property name="password" value="root" /> 
+	 		</bean>
 
 
-	<bean id="lsb"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		
+	<bean id="lsb" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="datasource" />
-		
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -34,9 +40,7 @@
 				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
 			</props>
 		</property>
-		
 		<property name="packagesToScan" value="com.ripon.entities"/>
-		
 	</bean>
 
 	<bean id="hibernateTemplate"

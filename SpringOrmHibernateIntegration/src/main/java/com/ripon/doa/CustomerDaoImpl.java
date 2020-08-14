@@ -1,5 +1,10 @@
 package com.ripon.doa;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -74,4 +79,14 @@ public class CustomerDaoImpl implements CustomerDao {
 		}
 		return customer;
 	}
+	
+	public List<Customer> getAllCustomer() {
+		Session s = hibernateTemplate.getSessionFactory().openSession();
+		Query query = s.createQuery("FROM Customer");
+		List list = query.list();
+		return list;
+	}
+	
+	
+	
 }

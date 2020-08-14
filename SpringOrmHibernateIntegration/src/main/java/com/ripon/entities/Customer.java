@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
+
 @Entity
 @Table(name = "customers", schema = "db01")
 public class Customer {
